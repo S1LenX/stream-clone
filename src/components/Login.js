@@ -4,13 +4,12 @@ import Header from './Header'
 import checkValidity from "../utils/validate"
 import { createUserWithEmailAndPassword,signInWithEmailAndPassword, updateProfile } from "firebase/auth";
 import {auth} from "../utils/firebase"
-import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { addUser } from '../utils/userSlice';
+import { BGSCREEN, SCREEN, USER_AVATAR } from '../utils/constants';
 const Login = () => {
     const[isSignInForm,setIsSignInForm]=useState(true);
     const[errmsg,seterrmsg]=useState(null);
-    const navigate=useNavigate();
     const email=useRef(null);
     const pass=useRef(null);
     const name=useRef(null);
@@ -27,11 +26,10 @@ const Login = () => {
                 // Signed up 
                 const user = userCredential.user;
                 updateProfile(user, {
-                    displayName: name.current.value, photoURL: "https://media.licdn.com/dms/image/v2/D5603AQH8-aBSxvKNVg/profile-displayphoto-scale_200_200/B56ZpEAlHMG4AY-/0/1762077596692?e=1780531200&v=beta&t=Cwhg7cF5DxJRLddMTC4BlmZssTIT2OQqfkcYBUqIfGY"
+                    displayName: name.current.value, photoURL: USER_AVATAR
                 }).then(() => {
                     const {uid,email,displayName,photoURL} = auth.currentUser;
                     dispatch(addUser({uid:uid,email:email,displayName:displayName, photoURL:photoURL}));
-                    navigate("/browse");
                 }).catch((error) => {
                     seterrmsg(error.message);
                 });
@@ -46,8 +44,6 @@ const Login = () => {
             .then((userCredential) => {
                 // Signed in 
                 const user = userCredential.user;
-                console.log(user);
-                navigate("/browse");
             })
             .catch((error) => {
                 const errorCode = error.code;
@@ -64,7 +60,7 @@ const Login = () => {
         <Header/>
         <div className='absolute'>
             <img 
-            src="https://assets.nflxext.com/ffe/siteui/vlv3/77c412a9-62ea-48a0-a5ee-466e11e851d5/web/IN-en-20260511-TRIFECTA-perspective_f0af4f75-4cc5-42bd-b0c5-2b65b8b50e03_large.jpg" 
+            src={BGSCREEN}
             alt="Bg"/>
         </div>
         <form onSubmit={(e)=>e.preventDefault()} className='w-3/12 absolute p-12 bg-black/75 my-36 mx-auto right-0 left-0 text-white rounded-lg'>
