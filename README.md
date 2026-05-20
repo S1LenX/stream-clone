@@ -15,6 +15,10 @@
 - Created Redux Store using userSlice
 - Implemented Sign out
 - Fetch Movies from TMDB
+- Unsubscribed to the onAuthStateChanged callback
+- added hardcoded values to constant file
+- Registered a TMDB API and Created an APP & got access token
+- Got data from TMDB now playing movies list API
 
 #Features
 - Login/SIgn up
@@ -27,6 +31,6 @@
         - Titl e & Description
         - Movie Suggestions
             - Movie List * N 
-- NetflixGPT 
+- StreamClon
     - Search Bar
     - Movie Suggestions
