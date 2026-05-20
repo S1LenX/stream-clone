@@ -34,7 +34,7 @@ function Header() {
 
 
   return (
-    <div className='absolute top-0 left-0 w-full px-12 py-4 bg-gradient-to-b from-black/80 via-black/40 to-transparent z-10 flex justify-between items-center'>
+    <div className='absolute top-0 left-0 w-full px-12 py-4 bg-gradient-to-b from-black/80 via-black/40 to-transparent z-50 flex justify-between items-center'>
     {/* Netflix Logo */}
     <img  
         className='w-44 object-contain transform hover:scale-[1.02] transition-transform duration-300'
