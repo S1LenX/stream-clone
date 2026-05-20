@@ -16,7 +16,6 @@ const Login = () => {
     const dispatch = useDispatch();
     const handleButtonClick=()=>{
         const msg=checkValidity(email.current.value,pass.current.value);
-        console.log(msg);
         seterrmsg(msg);
         if(msg) return;
 
