@@ -4,11 +4,7 @@ function VideoTitle({title,overview}) {
   return (
     <div className='w-screen aspect-video pt-[25%] px-24 absolute z-10 text-white bg-gradient-to-r from-black'>
         <h1 className='text-6xl font-bold'>{title}</h1>
-<<<<<<< HEAD
         <p className='py-6 text-lg w-3/4'>{overview}</p>
-=======
-        <p className='py-6 text-lg w-1/4'>{overview}</p>
->>>>>>> f431e698e53bbecf17967bc09732d325d0f685bb
         <div className="flex items-center my-4">
             <button className='mr-4 bg-white text-black font-bold p-4 px-10 text-xl rounded-md flex items-center gap-2 hover:bg-white/80 active:scale-[0.98] transition-all duration-200 shadow-md cursor-pointer'>
                 <span className="text-2xl">▶︎</span> Play
