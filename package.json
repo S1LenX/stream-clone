@@ -9,7 +9,10 @@
     "@testing-library/react": "^16.3.2",
     "@testing-library/user-event": "^13.5.0",
     "firebase": "^12.13.0",
+<<<<<<< HEAD
     "openai": "^6.38.0",
+=======
+>>>>>>> f431e698e53bbecf17967bc09732d325d0f685bb
     "react": "^19.2.6",
     "react-dom": "^19.2.6",
     "react-redux": "^9.3.0",

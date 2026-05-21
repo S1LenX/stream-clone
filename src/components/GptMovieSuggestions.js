@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { use } from 'react'
 import { useSelector } from 'react-redux';
 import MovieList from './MovieList';
@@ -16,6 +17,13 @@ const GptMovieSuggestions = () => {
             ))}
         </div>
     </div>
+=======
+import React from 'react'
+
+const GptMovieSuggestions = () => {
+  return (
+    <div>GptMovieSuggestions</div>
+>>>>>>> f431e698e53bbecf17967bc09732d325d0f685bb
   )
 }
 
