@@ -6,13 +6,15 @@ import { BGSCREEN } from '../utils/constants'
 const GptSearch = () => {
   return (
     <div>
-        <div className='fixed -z-10 w-full h-full'>
-            <img 
+        <div className='fixed -z-10'>
+            <img className='h-screen object-cover md:h-auto md:object-none'
             src={BGSCREEN}
             alt="Bg"/>
         </div>
-        <GptSearchBar/>
-        <GptMovieSuggestions/>
+        <div className='pt-[30%] md:p-20  flex flex-col gap-10'>
+          <GptSearchBar/>
+          <GptMovieSuggestions/>
+        </div>
     </div>
   )
 }

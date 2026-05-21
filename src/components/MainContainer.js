@@ -11,7 +11,7 @@ function MainContainer() {
     if(!movies)return;
     const {original_title,overview,id}=mainMovie;
     return (
-        <div className='relative h-screen '>
+        <div className='relative h-screen pt-[40%] md:pt-0'>
             <VideoBackground movieId={id}/>
             <VideoTitle title={original_title} overview={overview}/>
         </div>
