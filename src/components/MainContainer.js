@@ -5,7 +5,7 @@ import VideoBackground from "./VideoBackground";
 function MainContainer() {
     const movies=useSelector(store=>store.movies?.nowPlayingMovies);
     if(!movies)return;
-    const mainMovie=movies[0];
+    const mainMovie = movies[Math.floor(Math.random() * movies.length)];
     const {original_title,overview,id}=mainMovie;
     return (
         <div className='relative h-screen '>
