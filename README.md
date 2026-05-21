@@ -33,6 +33,15 @@
 - found out TMDB image CDN URL
 - Made browse page appealing
 - Used multiple custom hooks for variety of movies  and TV Shows 
+- GPT Search Page
+- GPT Search Bar
+- (BONUS) Multi-Language Feature in our App
+
+
+
+
+
+
 #Features
 - Login/SIgn up
     - Sign In/ Sign up Form
