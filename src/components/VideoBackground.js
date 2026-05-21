@@ -6,15 +6,9 @@ function VideoBackground({ movieId }) {
   useMovieTrailer(movieId);
   
   return (
-<<<<<<< HEAD
     <div className='absolute w-screen aspect-video overflow-hidden scale-125 z-0'>
       <iframe
         className='w-full h-full scale-125 pointer-events-none'
-=======
-    <div className='absolute w-screen aspect-video overflow-hidden scale-125 -z-10'>
-      <iframe
-        className='w-full h-full'
->>>>>>> f431e698e53bbecf17967bc09732d325d0f685bb
         src={`https://www.youtube.com/embed/${trailerVideo?.key}?autoplay=1&mute=1&loop=1&playlist=${trailerVideo?.key}&controls=0&rel=0`}
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
         allowFullScreen
