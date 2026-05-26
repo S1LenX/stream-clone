@@ -1,5 +1,15 @@
 {
   "projects": {
     "default": "stream-clone-78ab8"
-  }
+  },
+  "targets": {
+    "stream-clone-78ab8": {
+      "hosting": {
+        "varsh-flix": [
+          "varsh-flix"
+        ]
+      }
+    }
+  },
+  "etags": {}
 }

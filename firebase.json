@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "target": "varsh-flix",
     "public": "build",
     "ignore": [
       "firebase.json",
