@@ -73,7 +73,7 @@ function Header() {
               {showGptSearch?"Home":"🔍︎ Search"}
           </button>
           <img 
-              src={user.photoURL}
+              src="https://stream-clone-78ab8.web.app/uIcon.png"
               alt="user icon" 
               className='w-10 h-10 rounded shadow-md border border-neutral-700 hover:border-white transition-colors cursor-pointer'
           />

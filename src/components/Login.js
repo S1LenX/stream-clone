@@ -25,7 +25,7 @@ const Login = () => {
                 // Signed up 
                 const user = userCredential.user;
                 updateProfile(user, {
-                    displayName: name.current.value, photoURL: USER_AVATAR
+                    displayName: name.current.value, photoURL: "https://stream-clone-78ab8.web.app/uIcon.png"
                 }).then(() => {
                     const {uid,email,displayName,photoURL} = auth.currentUser;
                     dispatch(addUser({uid:uid,email:email,displayName:displayName, photoURL:photoURL}));
