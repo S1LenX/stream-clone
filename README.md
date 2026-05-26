@@ -44,8 +44,11 @@
 - Memoization (Reduced API Overhead)
 - Hiding APIs in .env
 - Made our Site Mobile Responsive
-
-
+- Category Filter Buttons — Added All, Movies, and TV Shows filter buttons on the home
+- Movie Card Hover Popup — Hovering over any movie/TV card now shows an expanded popup
+- Movie Detail Page
+- TV Show Detail Page
+- GPT Search Loading State
 
 
 

@@ -13,7 +13,7 @@ function MainContainer() {
     return (
         <div className='relative h-screen pt-[40%] md:pt-0'>
             <VideoBackground movieId={id}/>
-            <VideoTitle title={original_title} overview={overview}/>
+            <VideoTitle title={original_title} overview={overview} movieId={id}/>
         </div>
     )
 }

@@ -11,6 +11,7 @@ const movieSlice=createSlice({
         popularShows: null,
         topRatedShows: null,
         onAirShows: null,
+        activeCategory: "all",
     },
     reducers:{
         addNowPlayingMovies:(state,action)=>{
@@ -36,8 +37,9 @@ const movieSlice=createSlice({
         },
         addOnAirShows: (state, action) => {
             state.onAirShows = action.payload;
-        }
+        },
+        setActiveCategory: (state, action) => { state.activeCategory = action.payload; },
     },
 });
-export const { addNowPlayingMovies, addPopularMovies, addTopRatedMovies, addUpcomingMovies, addTrailerVideo, addPopularShows, addTopRatedShows, addOnAirShows } = movieSlice.actions;
+export const { addNowPlayingMovies, addPopularMovies, addTopRatedMovies, addUpcomingMovies, addTrailerVideo, addPopularShows, addTopRatedShows, addOnAirShows, setActiveCategory } = movieSlice.actions;
 export default movieSlice.reducer;

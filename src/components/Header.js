@@ -24,19 +24,25 @@ function Header() {
         if (user) {
             const {uid,email,displayName,photoURL} = user;
             dispatch(addUser({uid:uid,email:email,displayName:displayName, photoURL:photoURL}));
-            navigate("/browse");
+            if(window.location.pathname === "/") navigate("/browse");
         } else {
             dispatch(removeUser());
-            navigate("/");
+            if(window.location.pathname !== "/") navigate("/");
         }
         });
 
         return ()=> unSubscribe();
     },[]);
 
-    const handleGptSearchClick=()=>{
-      dispatch(toggleGptSearchView());
-    }
+    const handleGptSearchClick = () => {
+    if (window.location.pathname.startsWith("/movie") || 
+      window.location.pathname.startsWith("/tv")) {
+      dispatch(toggleGptSearchView());  // reset gpt state
+      navigate("/browse");
+      return;
+  }
+  dispatch(toggleGptSearchView());  // normal toggle on browse page
+}
     const handleLanguageChange=(e)=>{
       dispatch(changeLanguage(e.target.value));
     }
@@ -44,9 +50,10 @@ function Header() {
   return (
     <div className='absolute top-0 left-0 w-full px-12 py-4 bg-gradient-to-b from-black/80 via-black/40 to-transparent z-50 flex flex-col md:flex-row justify-between items-center'>
     <img  
-        className='w-44 mx-auto md:mx-0 object-contain transform hover:scale-[1.02] transition-transform duration-300'
+        className=' cursor-pointer w-44 mx-auto md:mx-0 object-contain transform hover:scale-[1.02] transition-transform duration-300'
         src={LOGO} 
-        alt="logo"
+        alt="logo" 
+        onClick={() => navigate("/browse")}
     />
     
     {/* Right-side User Controls Container */}

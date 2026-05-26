@@ -5,40 +5,53 @@ import { model } from '../utils/gemini';
 import { API_OPTIONS } from '../utils/constants';
 import { addGptMovieResult } from '../utils/gptSlice';
 
-export const GptSearchBar = () => {
+export const GptSearchBar = ({ isSearching, setIsSearching }) => {
     const dispatch=useDispatch();
     const langKey=useSelector(store=>store.config.lang);
     const searchText=useRef(null);
-    const [isSearching, setIsSearching] = useState(false);
     ///Search Movie in TMDB
-    const searchMovieTMDB=async(movie)=>{
-        const data = await fetch(`https://api.themoviedb.org/3/search/movie?query="${movie}"&include_adult=false&language=en-US&page=1`, 
-            API_OPTIONS
-        );
-        const json = await data.json();
-        return json.results;
-    }
+    const searchTMDB = async (query) => {
+        const [movieRes, tvRes] = await Promise.all([
+            fetch(
+                `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`,
+                API_OPTIONS
+            ),
+            fetch(
+                `https://api.themoviedb.org/3/search/tv?query=${query}&include_adult=false&language=en-US&page=1`,
+                API_OPTIONS
+            )
+        ]);
+
+        const movieJson = await movieRes.json();
+        const tvJson = await tvRes.json();
+
+        // Merge movie and tv results, filter out items with no poster
+        const combined = [
+            ...(movieJson.results || []),
+            ...(tvJson.results || [])
+        ].filter(item => item.poster_path);
+
+        return combined;
+    };
     const handleGptSearchClick=async()=>{
         if (!searchText.current.value) return;
         if (isSearching) return;
         setIsSearching(true);
-        console.log(searchText.current.value);
 
         try {
-            const gptQuery = `Act as a movie recommendation system. Search for movies based on this query: "${searchText.current.value}". 
-            Return ONLY a comma separated list of exactly 5 movie names, nothing else. 
+            const gptQuery = `Act as a movie and TV show recommendation system. Search for movies based on this query: "${searchText.current.value}". 
+            Return ONLY a comma separated list of exactly 10 titles, nothing else. 
             Example: Inception, The Dark Knight, Interstellar, Dunkirk, Tenet`;
 
             const gptResult = await model.generateContent(gptQuery);
             const text = gptResult.response.text();
             
             const gptMovies = text.split(",").map(name => name.trim());
-            console.log("Parsed Movie Array:", gptMovies);
+            // console.log("Parsed Movie Array:", gptMovies);
             
             //Pass gptMovies to TMDB fetching function 
-            const promiseArray=gptMovies.map(movie=>searchMovieTMDB(movie));
+            const promiseArray=gptMovies.map(movie=>searchTMDB(movie));
             const tmdbResults=await Promise.all(promiseArray);
-            console.log("Movies from TMDB:", tmdbResults);
 
             dispatch(addGptMovieResult({movieNames: gptMovies,movieResults: tmdbResults}));
         } catch (error) {
@@ -57,8 +70,8 @@ export const GptSearchBar = () => {
                 placeholder={lang[langKey].gptSearchPlaceholder}
                 className="p-4 m-4 w-[80%] bg-transparent border-none text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-600 rounded"
             />
-            <button onClick={handleGptSearchClick} className="py-2 px-4 w-[13%] bg-red-600 text-white rounded hover:bg-red-700">
-                {lang[langKey].search}
+            <button onClick={handleGptSearchClick} disabled={isSearching} className="py-2 px-4 w-[13%] bg-red-600 text-white rounded hover:bg-red-700">
+                {isSearching ? "..." : lang[langKey].search}
             </button>
         </form>
     </div>
