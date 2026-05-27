@@ -34,7 +34,10 @@ const MovieDetailPage = () => {
   }
   return (
     <div className='min-h-screen bg-black text-white'>
-      <Header />
+      <div className='relative z-50'>
+        <Header />
+      </div>
+      <div className='h-36 md:h-0' />
 
       <div className='relative w-full aspect-video bg-black'>
         {trailerKey ? (
@@ -52,7 +55,6 @@ const MovieDetailPage = () => {
             className='w-full h-full object-cover opacity-60'
           />
         )}
-        <div className='absolute bottom-0 left-0 w-full h-24 bg-gradient-to-t from-black to-transparent' />
       </div>
 
       <div className='px-4 md:px-12 py-6 flex flex-col md:flex-row gap-8'>
