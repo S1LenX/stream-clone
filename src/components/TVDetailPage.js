@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useMovieDetails from '../hooks/useMovieDetails'
 import { IMG_CDN_URL } from '../utils/constants'
 import Header from './Header'
+import useSampleVideo from '../hooks/useSampleVideo'
 
 const TVDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const { movie: show, trailerKey, loading } = useMovieDetails(id, true);  // 👈 isTV = true
+  const { movie: show, trailerKey, loading } = useMovieDetails(id, true);
+  const { videoUrl, videoLoading } = useSampleVideo(id);
+  const [showPlayer, setShowPlayer] = useState(false);
 
   if (loading) {
     return (
@@ -31,6 +34,7 @@ const TVDetailPage = () => {
         <Header />
       </div>
       <div className='h-36 md:h-0' />
+
       <div className='relative w-full aspect-video bg-black'>
         {trailerKey ? (
           <iframe
@@ -86,14 +90,48 @@ const TVDetailPage = () => {
             {show.overview}
           </p>
 
-          <button
-            onClick={() => navigate(-1)}
-            className='mt-2 self-start flex items-center gap-2 px-5 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full text-sm font-semibold transition'
-          >
-            ← Back
-          </button>
+          <div className='flex gap-3 mt-2 flex-wrap'>
+            <button
+              onClick={() => navigate(-1)}
+              className='px-5 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm font-semibold transition cursor-pointer'
+            >
+              ← Back
+            </button>
+            {!videoLoading && videoUrl && (
+              <button
+                onClick={() => window.open(videoUrl, '_blank')}
+                className='px-5 py-2 bg-red-600 hover:bg-red-700 rounded-full text-sm font-semibold transition cursor-pointer flex items-center gap-2'
+              >
+                ▶ Play Sample
+              </button>
+            )}
+          </div>
         </div>
       </div>
+
+      {showPlayer && videoUrl && (
+        <div className='fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4'>
+          <div className='w-full max-w-4xl'>
+            <div className='flex justify-between items-center mb-2'>
+              <p className='text-white font-semibold'>{show.name} — Sample Clip</p>
+              <button
+                onClick={() => setShowPlayer(false)}
+                className='text-white text-2xl font-bold hover:text-red-500 transition cursor-pointer'
+              >
+                ✕
+              </button>
+            </div>
+            <video
+              src={videoUrl}
+              controls
+              autoPlay
+              className='w-full rounded-xl'
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

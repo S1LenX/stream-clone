@@ -1,14 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useMovieDetails from '../hooks/useMovieDetails'
 import { IMG_CDN_URL } from '../utils/constants'
 import Header from './Header'
+import useSampleVideo from '../hooks/useSampleVideo'
 
 const MovieDetailPage = () => {
-  // useParams reads the :id from the URL — /movie/123 gives us { id: "123" }
   const { id } = useParams();
   const navigate = useNavigate();
   const { movie, trailerKey, loading } = useMovieDetails(id);
+  const { videoUrl, videoLoading } = useSampleVideo(id);
+  const [showPlayer, setShowPlayer] = useState(false);
 
   if (loading) {
     return (
@@ -25,6 +27,7 @@ const MovieDetailPage = () => {
       </div>
     );
   }
+
   if (!loading && movie && movie.success === false) {
     return (
       <div className='min-h-screen bg-black flex items-center justify-center'>
@@ -32,6 +35,7 @@ const MovieDetailPage = () => {
       </div>
     );
   }
+
   return (
     <div className='min-h-screen bg-black text-white'>
       <div className='relative z-50'>
@@ -58,7 +62,6 @@ const MovieDetailPage = () => {
       </div>
 
       <div className='px-4 md:px-12 py-6 flex flex-col md:flex-row gap-8'>
-        
         <div className='flex-shrink-0'>
           <img
             src={IMG_CDN_URL + movie.poster_path}
@@ -83,10 +86,7 @@ const MovieDetailPage = () => {
 
           <div className='flex flex-wrap gap-2'>
             {movie.genres?.map((g) => (
-              <span
-                key={g.id}
-                className='px-3 py-1 bg-zinc-800 rounded-full text-xs text-zinc-300'
-              >
+              <span key={g.id} className='px-3 py-1 bg-zinc-800 rounded-full text-xs text-zinc-300'>
                 {g.name}
               </span>
             ))}
@@ -96,14 +96,48 @@ const MovieDetailPage = () => {
             {movie.overview}
           </p>
 
-          <button
-            onClick={() => navigate(-1)}
-            className='mt-2 self-start flex items-center gap-2 px-5 py-2 bg-zinc-800 hover:bg-zinc-700 text-white rounded-full text-sm font-semibold transition'
-          >
-            ← Back
-          </button>
+          <div className='flex gap-3 mt-2 flex-wrap'>
+            <button
+              onClick={() => navigate(-1)}
+              className='px-5 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-full text-sm font-semibold transition cursor-pointer'
+            >
+              ← Back
+            </button>
+            {!videoLoading && videoUrl && (
+              <button
+                onClick={() => window.open(videoUrl, '_blank')}
+                className='px-5 py-2 bg-red-600 hover:bg-red-700 rounded-full text-sm font-semibold transition cursor-pointer flex items-center gap-2'
+              >
+                ▶ Play Sample
+              </button>
+            )}
+          </div>
         </div>
       </div>
+
+      {showPlayer && videoUrl && (
+        <div className='fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4'>
+          <div className='w-full max-w-4xl'>
+            <div className='flex justify-between items-center mb-2'>
+              <p className='text-white font-semibold'>{movie.title} — Sample Clip</p>
+              <button
+                onClick={() => setShowPlayer(false)}
+                className='text-white text-2xl font-bold hover:text-red-500 transition cursor-pointer'
+              >
+                ✕
+              </button>
+            </div>
+            <video
+              src={videoUrl}
+              controls
+              autoPlay
+              className='w-full rounded-xl'
+            >
+              Your browser does not support the video tag.
+            </video>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
