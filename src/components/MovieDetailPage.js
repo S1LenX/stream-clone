@@ -1,16 +1,13 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useMovieDetails from '../hooks/useMovieDetails'
 import { IMG_CDN_URL } from '../utils/constants'
 import Header from './Header'
-import useSampleVideo from '../hooks/useSampleVideo'
 
 const MovieDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { movie, trailerKey, loading } = useMovieDetails(id);
-  const { videoUrl, videoLoading } = useSampleVideo(id);
-  const [showPlayer, setShowPlayer] = useState(false);
 
   if (loading) {
     return (
@@ -103,41 +100,15 @@ const MovieDetailPage = () => {
             >
               ← Back
             </button>
-            {!videoLoading && videoUrl && (
-              <button
-                onClick={() => window.open(videoUrl, '_blank')}
-                className='px-5 py-2 bg-red-600 hover:bg-red-700 rounded-full text-sm font-semibold transition cursor-pointer flex items-center gap-2'
-              >
-                ▶ Play Sample
-              </button>
-            )}
+            <button
+              onClick={() => window.open(`https://vidsrc.fyi/embed/movie/${id}`, '_blank')}
+              className='px-5 py-2 bg-red-600 hover:bg-red-700 rounded-full text-sm font-semibold transition cursor-pointer flex items-center gap-2'
+            >
+              ▶ Play Now
+            </button>
           </div>
         </div>
       </div>
-
-      {showPlayer && videoUrl && (
-        <div className='fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center p-4'>
-          <div className='w-full max-w-4xl'>
-            <div className='flex justify-between items-center mb-2'>
-              <p className='text-white font-semibold'>{movie.title} — Sample Clip</p>
-              <button
-                onClick={() => setShowPlayer(false)}
-                className='text-white text-2xl font-bold hover:text-red-500 transition cursor-pointer'
-              >
-                ✕
-              </button>
-            </div>
-            <video
-              src={videoUrl}
-              controls
-              autoPlay
-              className='w-full rounded-xl'
-            >
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        </div>
-      )}
     </div>
   )
 }

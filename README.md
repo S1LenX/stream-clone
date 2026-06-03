@@ -49,9 +49,13 @@
 - Movie Detail Page
 - TV Show Detail Page
 - GPT Search Loading State
-
-
-
+- Movies and TV shows are played via VidSrc, embedded using TMDB IDs.
+- Updated MovieDetailPage to play movies in New Tabs
+- updated `useMovieDetails(id, isTV)` Fetches movie or TV show details + trailer from TMDB in parallel.
+- `useTVSeasons(tvId, seasonNumber)` Fetches all episodes for a given TV show season from TMDB.
+-  Updated TVDetailPage ,Season selector dropdown , Episode list per season,
+- Clicking any episode opens `vidsrc.fyi/embed/tv/{id}/{season}/{episode}` in a new tab
+- Discarded use of useSampleVideo hook
 #Features
 - Login/SIgn up
     - Sign In/ Sign up Form
