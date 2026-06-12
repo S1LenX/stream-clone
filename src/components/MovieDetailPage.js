@@ -101,7 +101,7 @@ const MovieDetailPage = () => {
               ← Back
             </button>
             <button
-              onClick={() => window.open(`https://vidsrc.fyi/embed/movie/${id}`, '_blank')}
+              onClick={() => window.open(`https://www.vidking.net/embed/movie/${id}?color=e50914&autoPlay=true`, '_blank')}
               className='px-5 py-2 bg-red-600 hover:bg-red-700 rounded-full text-sm font-semibold transition cursor-pointer flex items-center gap-2'
             >
               ▶ Play Now

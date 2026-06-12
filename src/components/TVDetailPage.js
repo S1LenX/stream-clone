@@ -33,7 +33,8 @@ const TVDetailPage = () => {
 
   const handlePlayEpisode = (episodeNumber) => {
     window.open(
-      `https://vidsrc.fyi/embed/tv/${id}/${selectedSeason}/${episodeNumber}`,
+      `https://www.vidking.net/embed/tv/${id}/${selectedSeason}/${episodeNumber}?color=e50914&autoPlay=true&nextEpisode=true&episodeSelector=true`
+,
       '_blank'
     );
   };
