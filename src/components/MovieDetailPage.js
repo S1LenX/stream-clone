@@ -2,12 +2,14 @@ import React from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import useMovieDetails from '../hooks/useMovieDetails'
 import { IMG_CDN_URL } from '../utils/constants'
+import useWatchHistory from '../hooks/useWatchHistory'
 import Header from './Header'
 
 const MovieDetailPage = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const { movie, trailerKey, loading } = useMovieDetails(id);
+  const { addToHistory } = useWatchHistory();
 
   if (loading) {
     return (
@@ -101,7 +103,10 @@ const MovieDetailPage = () => {
               ← Back
             </button>
             <button
-              onClick={() => window.open(`https://www.vidking.net/embed/movie/${id}?color=e50914&autoPlay=true`, '_blank')}
+              onClick={() =>
+                addToHistory(movie).then(() =>
+                  window.open(`https://www.vidking.net/embed/movie/${id}?color=e50914&autoPlay=true`, '_blank')
+                )}
               className='px-5 py-2 bg-red-600 hover:bg-red-700 rounded-full text-sm font-semibold transition cursor-pointer flex items-center gap-2'
             >
               ▶ Play Now

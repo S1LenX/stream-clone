@@ -2,7 +2,7 @@ import React from 'react'
 import MovieList from './MovieList'
 import { useSelector, useDispatch } from 'react-redux'
 import { setActiveCategory } from '../utils/movieSlice'
-
+import ContinueWatching from './ContinueWatching' 
 const SecondaryContainer = () => {
   const movies = useSelector((store) => store.movies);
   const activeCategory = useSelector((store) => store.movies.activeCategory);
@@ -25,7 +25,7 @@ const SecondaryContainer = () => {
       </div>
 
       <div className='bg-black'>
-
+        <ContinueWatching />
         {/* Category buttons — inside bg-black so they always show on dark bg */}
         <div className='flex gap-3 px-4 pt-4 pb-2'>
           {categories.map((cat) => (

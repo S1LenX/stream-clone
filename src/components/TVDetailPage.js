@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom'
 import useMovieDetails from '../hooks/useMovieDetails'
 import useTVSeasons from '../hooks/useTVSeasons'
 import { IMG_CDN_URL } from '../utils/constants'
+import useWatchHistory from '../hooks/useWatchHistory'
 import Header from './Header'
 
 const TVDetailPage = () => {
@@ -12,6 +13,7 @@ const TVDetailPage = () => {
   const [selectedSeason, setSelectedSeason] = useState(1);
   const [selectedEpisode, setSelectedEpisode] = useState(null);
   const { episodes, seasonLoading } = useTVSeasons(id, selectedSeason);
+  const { addToHistory } = useWatchHistory();
 
   if (loading) {
     return (
@@ -32,9 +34,9 @@ const TVDetailPage = () => {
   const totalSeasons = show.number_of_seasons || 1;
 
   const handlePlayEpisode = (episodeNumber) => {
+    addToHistory(show, true);
     window.open(
-      `https://www.vidking.net/embed/tv/${id}/${selectedSeason}/${episodeNumber}?color=e50914&autoPlay=true&nextEpisode=true&episodeSelector=true`
-,
+      `https://www.vidking.net/embed/tv/${id}/${selectedSeason}/${episodeNumber}?color=e50914&autoPlay=true&nextEpisode=true&episodeSelector=true`,
       '_blank'
     );
   };
