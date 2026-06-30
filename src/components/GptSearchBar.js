@@ -39,9 +39,13 @@ export const GptSearchBar = ({ isSearching, setIsSearching }) => {
         setIsSearching(true);
 
         try {
-            const gptQuery = `Act as a movie and TV show recommendation system. Search for movies based on this query: "${searchText.current.value}". 
-            Return ONLY a comma separated list of exactly 10 titles, nothing else. 
-            Example: Inception, The Dark Knight, Interstellar, Dunkirk, Tenet`;
+            const gptQuery = `Act as a movie and TV show recommendation system. The user searched for: "${searchText.current.value}".
+
+            If "${searchText.current.value}" is itself a real movie or TV show title, it MUST be the first item in your list, exactly as the correct official title.
+            Then follow it with 9 similar or related titles.
+
+            Return ONLY a comma separated list of exactly 10 titles, nothing else.
+            Example: Breaking Bad, Better Call Saul, Narcos, Ozark, The Wire, Fargo, Peaky Blinders, Money Heist, Dexter, The Sopranos`;
 
             const gptResult = await model.generateContent(gptQuery);
             const text = gptResult.response.text();
